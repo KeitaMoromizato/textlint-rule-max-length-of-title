@@ -20,6 +20,9 @@
   "keywords": [
     "textlint"
   ],
+  "bugs": {
+    "url": "https://github.com/KeitaMoromizato/textlint-rule-max-length-of-title/issues"
+  },
   "author": "Keita Moromizato",
   "email": "keita_moromizato@relationsgroup.co.jp",
   "license": "MIT",
