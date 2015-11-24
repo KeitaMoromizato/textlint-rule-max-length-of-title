@@ -1,0 +1,36 @@
+{
+  "name": "textlint-rule-max-length-of-title",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KeitaMoromizato/textlint-rule-max-length-of-title.git"
+  },
+  "version": "0.0.1",
+  "description": "textlint rule that check limit maximum length of title",
+  "main": "lib/max-length-of-title.js",
+  "scripts": {
+    "build": "babel src --out-dir lib --source-maps",
+    "watch": "babel src --out-dir lib --watch --source-maps",
+    "prepublish": "npm run --if-present build",
+    "test": "mocha"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "keywords": [
+    "textlint"
+  ],
+  "author": "Keita Moromizato",
+  "email": "keita_moromizato@relationsgroup.co.jp",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.8.34",
+    "espower-babel": "^3.3.0",
+    "mocha": "^2.3.4",
+    "power-assert": "^1.2.0",
+    "textlint": "^5.0.2"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
