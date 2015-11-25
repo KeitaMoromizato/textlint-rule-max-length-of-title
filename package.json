@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/KeitaMoromizato/textlint-rule-max-length-of-title.git"
   },
-  "version": "1.0.0.",
+  "version": "1.0.0",
   "description": "textlint rule that check limit maximum length of title",
   "main": "lib/max-length-of-title.js",
   "scripts": {
