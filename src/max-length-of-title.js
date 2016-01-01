@@ -1,7 +1,8 @@
 import {assign, trimLeft} from 'lodash';
 
 const defaultOptions = {
-  '#': 32
+  '#': 32,
+  'zenkakuBase': false
 };
 
 export default function(context, options = {}) {
@@ -16,12 +17,28 @@ export default function(context, options = {}) {
         const title = trimLeft(match[2]);
         const limit = options[match[1]];
 
-        if (limit < title.length) {
-          report(node, new RuleError(`"${title}" is over ${limit}`));
+        const length = options.zenkakuBase ? zenkakuBaseLength(title) : title.length;
+
+        if (limit < length) {
+          report(node, new RuleError(getMessage(title, limit, options.lang)));
         }
 
         resolve();
       });
     }
+  }
+}
+
+function zenkakuBaseLength(text) {
+  const zenkaku = text.replace(/[\x20-\x7E]/g, '');
+  return zenkaku.length + Math.ceil((text.length - zenkaku.length) / 2);
+}
+
+function getMessage(text, limit, lang = 'en') {
+  switch (lang) {
+    case 'ja':
+      return `「${text}」が${limit}文字を超えています。`;
+    default:
+      return `"${text}" is over ${limit}`;
   }
 }
