@@ -109,4 +109,43 @@ describe('max-length-of-title', function() {
       }).then(done, done);
     });
   });
+
+  context('when use "===" or "---" syntax (with options)', () => {
+    const textlint = new TextLintCore();
+
+    textlint.setupRules({
+      'max-length-of-title': rule
+    },{
+      'max-length-of-title': {
+        '#': 5,
+        '##': 8
+      }
+    });
+
+    it('should report error', (done) => {
+      textlint.lintMarkdown(`
+title.
+===
+subtitle.
+---
+      `).then(result => {
+
+        assert(result.messages.length === 2);
+
+        }).then(done, done);
+    });
+
+    it('should not report error', (done) => {
+      textlint.lintMarkdown(`
+title
+===
+subtitle
+---
+      `).then(result => {
+
+        assert(result.messages.length === 0);
+
+      }).then(done, done);
+    });
+  });
 });
