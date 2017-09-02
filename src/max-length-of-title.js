@@ -13,9 +13,9 @@ export default function(context, options = {}) {
   return {
     [Syntax.Header](node) {
       return new Promise((resolve, reject) => {
-        const match = trimLeft(getSource(node)).match(/^([#]+)([^#]*)$/);
-        const title = trimLeft(match[2]);
-        const limit = options[match[1]];
+        const match = parseHeader(getSource(node));
+        const title = match.title;
+        const limit = options[match.level];
 
         const length = options.zenkakuBase ? zenkakuBaseLength(title) : title.length;
 
@@ -41,4 +41,11 @@ function getMessage(text, limit, lang = 'en') {
     default:
       return `"${text}" is over ${limit}`;
   }
+}
+
+function parseHeader(text) {
+  const match = trimLeft(text).match(/^([#]+)([^#]*)$/);
+  const title = trimLeft(match[2]);
+  const level = match[1];
+  return { level, title };
 }
