@@ -13,9 +13,9 @@ export default function(context, options = {}) {
   return {
     [Syntax.Header](node) {
       return new Promise((resolve, reject) => {
-        const match = trimLeft(getSource(node)).match(/^([#]+)([^#]*)$/);
-        const title = trimLeft(match[2]);
-        const limit = options[match[1]];
+        const match = parseHeader(getSource(node));
+        const title = match.title;
+        const limit = options[match.level];
 
         const length = options.zenkakuBase ? zenkakuBaseLength(title) : title.length;
 
@@ -41,4 +41,20 @@ function getMessage(text, limit, lang = 'en') {
     default:
       return `"${text}" is over ${limit}`;
   }
+}
+
+function parseHeader(text) {
+  const match1 = trimLeft(text).match(/^([#]+)([^#]*)$/);
+  if (match1 !== null) {
+    const title = trimLeft(match1[2]);
+    const level = match1[1];
+    return { level, title };
+  }
+  const match2 = trimLeft(text).match(/^(.*)\n(-+|=+)$/);
+  if (match2 !== null) {
+    const title = trimLeft(match2[1]);
+    const level = match2[2][0] === '=' ? '#' : '##';
+    return { level, title };
+  }
+  throw new Error('Unknown Header.Syntax: ' + text);
 }
